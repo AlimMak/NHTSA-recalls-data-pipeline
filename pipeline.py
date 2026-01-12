@@ -27,7 +27,7 @@ def transform_recalls(results):
                       "summary": recall["Summary"] 
                       }
         dictList.append(simplified)
-    print(dictList)
+    return dictList
 
 
 
