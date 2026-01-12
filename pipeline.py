@@ -1,17 +1,20 @@
 import requests, csv
 
-def extract_recalls(make, model, year):
-    url = f"https://api.nhtsa.gov/recalls/recallsByVehicle?make={make}&model={model}&modelYear={year}"
-    response = requests.get(url)
+def extract_recalls(data):
 
-    if response.status_code == 200:
-        RecallData = response.json()
-        print(f"Success! Found {RecallData['Count']} Recalls")
-        return RecallData
-    else:
-        print(f"Error: {response.status_code}")
-        print(response.text)
+    RecallData = []
+    for car in data:
+        url = f"https://api.nhtsa.gov/recalls/recallsByVehicle?make={car.make}&model={car.model}&modelYear={car.year}"
+        response = requests.get(url)
 
+        if response.status_code == 200:
+            RecallData.append(response.json())
+            print(f"Success! Found {RecallData['Count']} Recalls")
+        else:
+            print(f"Error: {response.status_code}")
+            print(response.text)
+            
+    return RecallData
 
 
 
@@ -29,9 +32,13 @@ def transform_recalls(results):
         dictList.append(simplified)
     return dictList
 
+
+
+
+
 #usedictList here
 fieldnames = ["campaign_number", "make", "model", "year", "component", "summary"]
-# csv_path = "data/test.csv"
+
 def load_to_csv(data, filename):
     with open(f"data/{filename}.csv", 'w', newline='') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
@@ -47,13 +54,16 @@ def load_to_csv(data, filename):
 
 
 
-
-
-
 brand = "Honda"
-carModel = "accord"
+carModel = "Accord"
 productionYear = "2020"
 dataFile = "testData"
+
+cars = [{"make": "Honda", "model": "Accord", "year": "2020"}, 
+        {"make": "Ford","model": "F-150", "year": "2018"}, 
+        {"make": "BMW", "model": "M3", "year": "2018"}]
+
+
 data = extract_recalls(brand, carModel, productionYear)
 transformedData = transform_recalls(data['results'])
 load_to_csv(transformedData, dataFile)
