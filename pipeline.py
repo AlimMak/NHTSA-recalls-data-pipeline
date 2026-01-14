@@ -24,11 +24,13 @@ def transform_recalls(recallInfo):
     dictList = []
     for response in recallInfo:  # each API response
         for recall in response['results']:  # each recall inside that response
+            splitcomponent = recall["Component"].split(",")[0]
+            splitcomponent = splitcomponent.split(":")[0]
             simplified = {"campaign_number": recall["NHTSACampaignNumber"], 
                           "make": recall["Make"].title(),
                           "model": recall["Model"].title(),
                           "year": recall["ModelYear"],
-                          "component": recall["Component"],
+                          "component": splitcomponent,
                           "summary": recall["Summary"] 
                           }
             dictList.append(simplified)
