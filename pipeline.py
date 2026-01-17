@@ -11,9 +11,11 @@ def extract_recalls(data):
             RecallData.append(response.json())
             currCar = response.json()
             print(f"Success! Found {currCar['Count']} Recalls")
-        else:
+        elif response.status_code == 400:
             print(f"Error: {response.status_code}")
             print(response.text)
+        else:
+            print("Error")
 
     return RecallData
 
@@ -55,10 +57,6 @@ def load_to_csv(data, filename):
 
 
 
-
-brand = "Honda"
-carModel = "Accord"
-productionYear = "2020"
 dataFile = "testData"
 
 cars = [{"make": "Honda", "model": "Accord", "year": "2020"}, 
