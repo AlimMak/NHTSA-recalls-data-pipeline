@@ -63,7 +63,8 @@ cars = [{"make": "Honda", "model": "Accord", "year": "2020"},
         {"make": "Ford","model": "F-150", "year": "2018"}, 
         {"make": "Ford", "model": "Mustang", "year": "2018"},
         {"make": "Toyota", "model": "Tundra", "year": "2022"},
-        {"make": "Chevrolet", "model": "Tahoe", "year": "2021"}]
+        {"make": "Chevrolet", "model": "Tahoe", "year": "2021"},
+        {"make": "Alfa Romeo", "model": "Giulia", "year": "2022"}]
 
 
 data = extract_recalls(cars)
